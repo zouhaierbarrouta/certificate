@@ -34,7 +34,8 @@
             </div>
         </div>
     </div>
-    <div class="certificate-container" id="certificateContent">
+    <div class="scale-wrapper" id="scaleWrapper">
+        <div class="certificate-container" id="certificateContent">
         <div class="inner-border">
             <div class="text-section">
                 <h1 class="title" id="displayMainTitle"> شهادة شكر وتقدير </h1>
@@ -63,6 +64,7 @@
             </div>
         </div>
     </div>
+    </div> <!-- scale-wrapper end -->
 
     <!-- Modal for Editing -->
     <div id="editModal" class="modal no-print">
@@ -324,7 +326,8 @@
         // Auto-scaling logic to fit certificate in viewport height and width without scrollbars
         function adjustScale() {
             const container = document.getElementById('certificateContent');
-            if (!container) return;
+            const wrapper = document.getElementById('scaleWrapper');
+            if (!container || !wrapper) return;
             
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
@@ -352,15 +355,19 @@
                 scale = 1;
             }
             
-            // Apply the transform
+            // Apply the transform to the certificate using 'top left' to avoid alignment offset
             container.style.transform = `scale(${scale})`;
-            container.style.transformOrigin = 'center center';
+            container.style.transformOrigin = 'top left';
+            
+            // Resize the wrapper to match the exact visual size of the certificate
+            wrapper.style.width = `${baseWidth * scale}px`;
+            wrapper.style.height = `${baseHeight * scale}px`;
             
             // Shift the certificate slightly up on mobile to perfectly clear the bottom control bar
             if (isMobile) {
-                container.style.marginTop = '-40px';
+                wrapper.style.marginTop = '-30px';
             } else {
-                container.style.marginTop = '0px';
+                wrapper.style.marginTop = '0px';
             }
         }
 

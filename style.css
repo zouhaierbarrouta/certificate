@@ -63,9 +63,19 @@ body {
     font-family: 'Cairo', sans-serif;
 }
 
+.scale-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    flex-shrink: 0;
+}
+
 .certificate-container {
     width: 1122px;
+    height: 793px;
     min-height: 793px;
+    flex-shrink: 0;
     display: flex;
     position: relative;
     padding: 40px 40px;
