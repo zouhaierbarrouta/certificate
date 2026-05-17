@@ -355,9 +355,9 @@
                 scale = 1;
             }
             
-            // Apply the transform to the certificate using 'top left' to avoid alignment offset
+            // Apply the transform to the certificate using 'center center' to be fully RTL/LTR safe
             container.style.transform = `scale(${scale})`;
-            container.style.transformOrigin = 'top left';
+            container.style.transformOrigin = 'center center';
             
             // Resize the wrapper to match the exact visual size of the certificate
             wrapper.style.width = `${baseWidth * scale}px`;

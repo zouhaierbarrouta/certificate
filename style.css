@@ -616,6 +616,11 @@ body {
         max-height: none !important;
         overflow: visible !important;
     }
+    .scale-wrapper {
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+    }
     .certificate-container {
         box-shadow: none;
         margin: 0;
