@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادة شكر وتقدير</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="borders.js"></script>
+</head>
+
+<body>
+    <div class="controls-container no-print">
+        <button class="control-btn edit-btn" onclick="openModal()">
+            <span class="btn-icon">✏️</span>
+            تعديل البيانات
+        </button>
+        <button class="control-btn print-btn" id="printBtn" onclick="printToPDF()">
+            <span class="btn-icon">🖨️</span>
+            تحميل PDF
+        </button>
+        
+        <!-- Background Slider Controls -->
+        <div class="slider-container">
+            <div class="slider-title">إطار الشهادة</div>
+            <div class="slider-buttons">
+                <button class="slider-btn" onclick="prevBorder()">◀</button>
+                <span class="slider-num" id="borderNum">1 / 8</span>
+                <button class="slider-btn" onclick="nextBorder()">▶</button>
+            </div>
+        </div>
+    </div>
+    <div class="certificate-container" id="certificateContent">
+        <div class="inner-border">
+            <div class="text-section">
+                <h1 class="title" id="displayMainTitle"> شهادة شكر وتقدير </h1>
+                 <p class="intro">تتقدم <span id="displayTeacherTitle">المعلم(ة)</span>: <strong id="displayTeacherName">اسم المعلم(ة)</strong>، بأسمى عبارات
+                    الفخر والاعتزاز للتلميذ(ة):
+                </p>
+                <div class="student-name" id="displayName">اسم التلميذ(ة)</div>
+                <p class="body-text" id="displayText">
+                    تهانينا لكِ لتفوقك وتميزك خلال هذه السنة الدراسية.<br>
+                    لقد أثبتِّ أنكِ تلميذة طموحة تحملين مستقبلاً مشرفاً، ونرى فيكِ بوادر النجاح الذي سيقودكِ يوماً ما
+                    لتحقيق حلمكِ في أن تصبحي طبيبه إن شاء الله.
+                </p>
+                <div class="footer-details">
+                    <div class="academic-year">
+                        السنة الدراسية
+                        <div class="year-display" id="displayYear">2025/2026</div>
+                    </div>
+                    <div class="teacher-name">
+                        توقيع <span id="displayTeacherTitleFooter">المعلم(ة)</span>
+                        <div class="signature" id="displaySignature">اسم المعلم(ة)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="image-section" id="imageSection" style="display: none;">
+                <img id="studentImage" src="" alt="Student Image" class="student-photo">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Editing -->
+    <div id="editModal" class="modal no-print">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>تعديل بيانات الشهادة</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body modal-grid">
+                <!-- Right Column: Form Inputs -->
+                <div class="modal-form-inputs">
+                    <div class="form-group">
+                        <label>عنوان الشهادة:</label>
+                        <input type="text" id="inputMainTitle" placeholder="مثال: شهادة شكر وتقدير">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم التلميذ(ة):</label>
+                        <input type="text" id="inputName" placeholder="أدخل الاسم هنا...">
+                    </div>
+                    <div class="form-group">
+                        <label>نص التقدير:</label>
+                        <textarea id="inputText" rows="4" placeholder="أدخل نص التقدير هنا..."></textarea>
+                    </div>
+                    <div class="form-row-two-col">
+                        <div class="form-group">
+                            <label>السنة الدراسية:</label>
+                            <input type="text" id="inputYear" placeholder="مثال: 2025/2026">
+                        </div>
+                        <div class="form-group">
+                            <label>الصفة:</label>
+                            <select id="inputTeacherTitle">
+                                <option value="مُؤَدَّب(ة)">مُؤَدَّب(ة)</option>
+                                <option value="المعلم(ة)" selected>المعلم(ة)</option>
+                                <option value="الأستاذ(ة)">الأستاذ(ة)</option>
+                                <option value="مؤطر(ة)">مؤطر(ة)</option>
+                                <option value="مشرف(ة)">مشرف(ة)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>اسم المعلم(ة) (التوقيع):</label>
+                        <input type="text" id="inputSignature" placeholder="أدخل اسم المعلم(ة) هنا...">
+                    </div>
+                </div>
+
+                <!-- Left Column: File Uploader -->
+                <div class="modal-uploader-sidebar">
+                    <div class="form-group" style="height: 100%; display: flex; flex-direction: column; margin-bottom: 0;">
+                        <label>صورة التلميذ(ة):</label>
+                        <div class="upload-widget-container" style="flex: 1; justify-content: center;">
+                            <div class="upload-icon-wrapper">
+                                <svg id="uploadDefaultIcon" class="file-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 10 H80 V70 L60 90 H20 Z" fill="#f5a675"/>
+                                    <path d="M60 70 L80 70 L60 90 Z" fill="#cf8353"/>
+                                </svg>
+                                <img id="uploadPreviewImage" src="" alt="Preview" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                            </div>
+                            <label for="inputImage" class="upload-pill-btn">اختر صورة</label>
+                            <input type="file" id="inputImage" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+                            <div id="fileNameDisplay" class="file-name-display">لم يتم اختيار أي صورة بعد</div>
+                        </div>
+                        <small class="upload-help">يفضل استخدام صورة بأبعاد 325x425 بكسل للحصول على أفضل نتيجة.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="save-btn" onclick="saveChanges()">حفظ التغييرات</button>
+                <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        async function printToPDF() {
+            const btn = document.querySelector('.print-btn');
+            const originalContent = btn.innerHTML;
+
+            try {
+                // 1. Update button state
+                btn.innerHTML = '⏳ جاري المعالجة...';
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.style.cursor = 'wait';
+
+                const element = document.getElementById('certificateContent');
+                const opt = {
+                    margin: 0,
+                    filename: 'شهادة_شكر_وتقدير.pdf',
+                    image: { type: 'jpeg', quality: 1.0 },
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        letterRendering: true,
+                        scrollY: 0,
+                        scrollX: 0,
+                        width: 1122,
+                        windowWidth: 1122,
+                        x: 0,
+                        y: 0
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'landscape',
+                        compress: true
+                    }
+                };
+
+                // Use the newer syntax for better control
+                await html2pdf().set(opt).from(element).save();
+
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert("حدث خطأ أثناء تحميل الملف: " + error.message);
+            } finally {
+                // 3. Restore button state
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            }
+        }
+
+        function openModal() {
+            document.getElementById('inputMainTitle').value = document.getElementById('displayMainTitle').innerText;
+            document.getElementById('inputName').value = document.getElementById('displayName').innerText;
+            // Clean up the text for the textarea
+            let text = document.getElementById('displayText').innerHTML.replace(/<br\s*[\/]?>/gi, "\n");
+            document.getElementById('inputText').value = text;
+            document.getElementById('inputYear').value = document.getElementById('displayYear').innerText;
+            document.getElementById('inputSignature').value = document.getElementById('displaySignature').innerText;
+
+            // Set correct select value based on display title
+            const currentTitle = document.getElementById('displayTeacherTitle').innerText;
+            document.getElementById('inputTeacherTitle').value = currentTitle;
+
+            // Set correct upload preview based on existing image
+            const studentImage = document.getElementById('studentImage');
+            const preview = document.getElementById('uploadPreviewImage');
+            const defaultIcon = document.getElementById('uploadDefaultIcon');
+            const display = document.getElementById('fileNameDisplay');
+            
+            if (studentImage.src && studentImage.src !== "" && document.getElementById('imageSection').style.display !== 'none') {
+                preview.src = studentImage.src;
+                preview.style.display = 'block';
+                defaultIcon.style.display = 'none';
+                display.innerText = 'تم تحميل صورة مسبقاً';
+                display.style.color = '#27ae60';
+                display.style.fontWeight = 'bold';
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+                defaultIcon.style.display = 'block';
+                display.innerText = 'لم يتم اختيار أي صورة بعد';
+                display.style.color = '#666';
+                display.style.fontWeight = 'normal';
+            }
+
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Update uploaded image filename display in modal
+        function updateFileName(input) {
+            const display = document.getElementById('fileNameDisplay');
+            const preview = document.getElementById('uploadPreviewImage');
+            const defaultIcon = document.getElementById('uploadDefaultIcon');
+            
+            if (input.files && input.files[0]) {
+                display.innerText = input.files[0].name;
+                display.style.color = '#27ae60';
+                display.style.fontWeight = 'bold';
+                
+                // Live preview in modal uploader
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    defaultIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                display.innerText = 'لم يتم اختيار أي صورة بعد';
+                display.style.color = '#666';
+                display.style.fontWeight = 'normal';
+                
+                preview.src = '';
+                preview.style.display = 'none';
+                defaultIcon.style.display = 'block';
+            }
+        }
+
+        function saveChanges() {
+            // Update Text
+            document.getElementById('displayMainTitle').innerText = document.getElementById('inputMainTitle').value;
+            document.getElementById('displayName').innerText = document.getElementById('inputName').value;
+            document.getElementById('displayText').innerHTML = document.getElementById('inputText').value.replace(/\n/g, '<br>');
+            document.getElementById('displayYear').innerText = document.getElementById('inputYear').value;
+            const sig = document.getElementById('inputSignature').value;
+            document.getElementById('displaySignature').innerText = sig;
+            document.getElementById('displayTeacherName').innerText = sig;
+
+            // Update Teacher Title
+            const selectedTitle = document.getElementById('inputTeacherTitle').value;
+            document.getElementById('displayTeacherTitle').innerText = selectedTitle;
+            document.getElementById('displayTeacherTitleFooter').innerText = selectedTitle;
+
+            // Update Image
+            const imageInput = document.getElementById('inputImage');
+            const studentImage = document.getElementById('studentImage');
+            const imageSection = document.getElementById('imageSection');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    studentImage.src = e.target.result;
+                    imageSection.style.display = 'flex';
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else if (!studentImage.src || studentImage.getAttribute('src') === "") {
+                imageSection.style.display = 'none';
+            }
+
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('editModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Background Slider Logic
+        let currentBorderIndex = 0;
+
+        function updateBorder() {
+            const container = document.getElementById('certificateContent');
+            container.style.backgroundImage = `url('${borders[currentBorderIndex]}')`;
+            document.getElementById('borderNum').innerText = `${currentBorderIndex + 1} / ${borders.length}`;
+        }
+
+        function nextBorder() {
+            currentBorderIndex = (currentBorderIndex + 1) % borders.length;
+            updateBorder();
+        }
+
+        function prevBorder() {
+            currentBorderIndex = (currentBorderIndex - 1 + borders.length) % borders.length;
+            updateBorder();
+        }
+
+        // Initialize background slider on load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateBorder();
+        });
+    </script>
+
+</body>
+
+</html>
