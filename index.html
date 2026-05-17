@@ -333,12 +333,14 @@
             const baseWidth = 1122;
             const baseHeight = 793;
             
-            // We want to leave some padding around the certificate (e.g., 40px)
-            const padding = 40; 
+            // On mobile, leave extra padding at the bottom for the fixed controls bar
+            const isMobile = viewportWidth <= 768;
+            const paddingWidth = 40;
+            const paddingHeight = isMobile ? 120 : 40;
             
             // Available dimensions
-            const availableWidth = viewportWidth - padding;
-            const availableHeight = viewportHeight - padding;
+            const availableWidth = viewportWidth - paddingWidth;
+            const availableHeight = viewportHeight - paddingHeight;
             
             // Calculate scale factors
             const scaleX = availableWidth / baseWidth;
@@ -353,6 +355,13 @@
             // Apply the transform
             container.style.transform = `scale(${scale})`;
             container.style.transformOrigin = 'center center';
+            
+            // Shift the certificate slightly up on mobile to perfectly clear the bottom control bar
+            if (isMobile) {
+                container.style.marginTop = '-40px';
+            } else {
+                container.style.marginTop = '0px';
+            }
         }
 
         window.addEventListener('resize', adjustScale);

@@ -180,23 +180,68 @@ body {
     line-height: 1.2;
 }
 
-/* Responsive design */
-@media (max-width: 900px) {
-    .inner-border {
-        flex-direction: column;
+/* Responsive Controls for Mobile Devices */
+@media (max-width: 768px) {
+    .controls-container {
+        position: fixed;
+        bottom: 12px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        width: 95%;
+        max-width: 500px;
+        justify-content: space-between;
         align-items: center;
+        gap: 8px;
+        background: rgba(11, 37, 69, 0.95);
+        padding: 8px 12px;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(11, 37, 69, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        box-sizing: border-box;
     }
-    .certificate-container {
-        width: 90%;
+    
+    .control-btn {
+        min-width: unset;
+        flex: 1.1;
+        padding: 8px 10px;
+        font-size: 0.85rem;
+        height: 40px;
+        white-space: nowrap;
+        gap: 6px;
     }
-    .image-section {
-        flex: 0 0 auto;
-        width: 80%;
-        margin-top: 30px;
+    
+    .slider-container {
+        flex: 0.9;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        gap: 2px !important;
+        min-width: unset !important;
     }
-    .image-section img {
-        width: 100%;
-        height: auto;
+    
+    .slider-title {
+        display: none !important;
+    }
+    
+    .slider-buttons {
+        gap: 4px !important;
+        justify-content: center;
+    }
+    
+    .slider-btn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .slider-num {
+        font-size: 0.85rem !important;
+        color: white !important;
+        min-width: 38px !important;
     }
 }
 
