@@ -321,9 +321,46 @@
             updateBorder();
         }
 
+        // Auto-scaling logic to fit certificate in viewport height and width without scrollbars
+        function adjustScale() {
+            const container = document.getElementById('certificateContent');
+            if (!container) return;
+            
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Base dimensions of the certificate container
+            const baseWidth = 1122;
+            const baseHeight = 793;
+            
+            // We want to leave some padding around the certificate (e.g., 40px)
+            const padding = 40; 
+            
+            // Available dimensions
+            const availableWidth = viewportWidth - padding;
+            const availableHeight = viewportHeight - padding;
+            
+            // Calculate scale factors
+            const scaleX = availableWidth / baseWidth;
+            const scaleY = availableHeight / baseHeight;
+            
+            // Choose the minimum scale factor to ensure it fits both horizontally and vertically
+            let scale = Math.min(scaleX, scaleY);
+            if (scale > 1) {
+                scale = 1;
+            }
+            
+            // Apply the transform
+            container.style.transform = `scale(${scale})`;
+            container.style.transformOrigin = 'center center';
+        }
+
+        window.addEventListener('resize', adjustScale);
+
         // Initialize background slider on load
         window.addEventListener('DOMContentLoaded', () => {
             updateBorder();
+            adjustScale();
         });
     </script>
 

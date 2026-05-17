@@ -56,10 +56,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
     background-color: #e9ecef;
     font-family: 'Cairo', sans-serif;
-    padding-top: 100px;
 }
 
 .certificate-container {
@@ -556,10 +557,14 @@ body {
     body {
         padding: 0;
         background: white;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
     }
     .certificate-container {
         box-shadow: none;
         margin: 0;
         border-radius: 0;
+        transform: none !important; /* Reset scale when printing */
     }
 }
