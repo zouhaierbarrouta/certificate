@@ -336,10 +336,11 @@
             const baseWidth = 1122;
             const baseHeight = 793;
             
-            // On mobile, leave extra padding at the bottom for the fixed controls bar
+            // Adjust available height for top header navbar (70px on desktop, 60px on mobile)
             const isMobile = viewportWidth <= 768;
             const paddingWidth = 40;
-            const paddingHeight = isMobile ? 120 : 40;
+            // 70px top navbar + 40px safe spacing (desktop) or 60px top navbar + 20px safe spacing (mobile)
+            const paddingHeight = isMobile ? 80 : 110;
             
             // Available dimensions
             const availableWidth = viewportWidth - paddingWidth;
@@ -363,12 +364,8 @@
             wrapper.style.width = `${baseWidth * scale}px`;
             wrapper.style.height = `${baseHeight * scale}px`;
             
-            // Shift the certificate slightly up on mobile to perfectly clear the bottom control bar
-            if (isMobile) {
-                wrapper.style.marginTop = '-30px';
-            } else {
-                wrapper.style.marginTop = '0px';
-            }
+            // Reset margin top since it's perfectly centered in the layout area under the top navbar
+            wrapper.style.marginTop = '0px';
         }
 
         window.addEventListener('resize', adjustScale);
