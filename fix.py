@@ -10,7 +10,7 @@ def to_base64(filepath):
 student_b64 = to_base64(os.path.join(cwd, 'images', 'student.png'))
 bg_b64 = to_base64(os.path.join(cwd, 'images', 'background.png'))
 
-html_path = os.path.join(cwd, 'certificate.html')
+html_path = os.path.join(cwd, 'index.html')
 with open(html_path, 'r', encoding='utf-8') as f:
     html = f.read()
 

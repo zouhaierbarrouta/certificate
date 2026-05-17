@@ -22,8 +22,8 @@ if os.path.exists(bg_path):
         f.write(new_css)
     print("style.css updated with base64 background.")
 
-# 2. Update certificate.html
-html_path = r'c:\Users\Kian-PC\Desktop\zouhour certification\certificate.html'
+# 2. Update index.html
+html_path = r'c:\Users\Kian-PC\Desktop\zouhour certification\index.html'
 st_path = r'c:\Users\Kian-PC\Desktop\zouhour certification\img\student.png'
 
 if os.path.exists(st_path):
@@ -36,4 +36,4 @@ if os.path.exists(st_path):
     
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(new_html)
-    print("certificate.html updated with base64 student image.")
+    print("index.html updated with base64 student image.")

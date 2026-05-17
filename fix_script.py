@@ -1,7 +1,7 @@
 import os
 import re
 
-path = r"c:\Users\Kian-PC\Desktop\zouhour certification\certificate.html"
+path = r"c:\Users\Kian-PC\Desktop\zouhour certification\index.html"
 
 with open(path, 'r', encoding='utf-8') as f:
     content = f.read()

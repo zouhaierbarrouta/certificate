@@ -1,4 +1,4 @@
-file_path = r'c:\Users\Kian-PC\Desktop\zouhour certification\certificate.html'
+file_path = r'c:\Users\Kian-PC\Desktop\zouhour certification\index.html'
 
 with open(file_path, 'r', encoding='utf-8') as f:
     lines = f.readlines()

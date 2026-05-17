@@ -6,7 +6,7 @@ $studentB64 = [System.Convert]::ToBase64String($studentBytes)
 $bgBytes = [System.IO.File]::ReadAllBytes("$cwd\img\background.png")
 $bgB64 = [System.Convert]::ToBase64String($bgBytes)
 
-$htmlPath = "$cwd\certificate.html"
+$htmlPath = "$cwd\index.html"
 $htmlContent = [System.IO.File]::ReadAllText($htmlPath, [System.Text.Encoding]::UTF8)
 # We replace the previous base64 or path with the new base64
 # To be safe, we can regex replace the src and url values
